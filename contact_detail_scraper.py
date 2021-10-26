@@ -7,11 +7,11 @@ def get_email(soup):
     try:
         mailtos = soup.select('a[href^=mailto]')
         emailList = []
-        for i in mailtos:
-            content = str(i.parent)
+        for mailto in mailtos:
+            content = str(mailto.parent)
             if "sales" in content.lower():
                 emailList.clear()
-                href = i['href']
+                href = mailto['href']
                 try:
                     x, mail = href.split(':')
                 except ValueError:
@@ -19,7 +19,7 @@ def get_email(soup):
                 emailList.append(mail)
                 return emailList
             else:
-                href = i['href']
+                href = mailto['href']
                 try:
                     x, mail = href.split(':')
                 except ValueError:
