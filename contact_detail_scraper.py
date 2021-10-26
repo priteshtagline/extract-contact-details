@@ -25,13 +25,21 @@ def get_email(soup):
                 except ValueError:
                     break
                 emailList.append(mail)
+                return emailList
+    except:
+        pass
+
+    try:
+        footer = str(soup.select('footer'))
+        emailList = re.findall(r'([a-zA-Z0-9._-]+@[a-zA-Z._-]+\.[a-zA-Z_-]+)', footer)
         return emailList
     except:
         pass
 
 
-urls = ["https://www.significantinfotech.com/about-us/",
-        "https://taglineinfotech.com/",]
+urls = ["https://www.significantinfotech.com",
+        "https://taglineinfotech.com/",
+        "https://www.c-sharpcorner.com/article/how-to-validate-an-email-address-in-python/",]
 
 
 headers = {
