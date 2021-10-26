@@ -8,19 +8,30 @@ def get_email(soup):
         mailtos = soup.select('a[href^=mailto]')
         emailList = []
         for i in mailtos:
-            href = i['href']
-            try:
-                x, mail = href.split(':')
-            except ValueError:
-                break
-            emailList.append(mail)
+            content = str(i.parent)
+            if "sales" in content.lower():
+                emailList.clear()
+                href = i['href']
+                try:
+                    x, mail = href.split(':')
+                except ValueError:
+                    break
+                emailList.append(mail)
+                return emailList
+            else:
+                href = i['href']
+                try:
+                    x, mail = href.split(':')
+                except ValueError:
+                    break
+                emailList.append(mail)
         return emailList
     except:
         pass
 
 
 urls = ["https://www.significantinfotech.com/about-us/",
-        "https://taglineinfotech.com/", ]
+        "https://taglineinfotech.com/",]
 
 
 headers = {
