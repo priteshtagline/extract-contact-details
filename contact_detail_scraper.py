@@ -75,6 +75,7 @@ def get_email(soup):
 #     try:
 #         mailtos = soup.select('a[href^=mailto]')
 #         emailList = []
+#         contact_info = None
 #         for mailto in mailtos:
 #             content = mailto.parent
 #             if "sales" in str(content).lower():
@@ -85,7 +86,7 @@ def get_email(soup):
 #                     break
 #                 emailList.append(mail)
 #                 contact_info = get_contact_number(content)
-#                 return emailList,contact_info
+#                 return emailList , contact_info
 #             else:
 #                 href = mailto['href']
 #                 try:
@@ -93,8 +94,18 @@ def get_email(soup):
 #                 except ValueError:
 #                     break
 #                 emailList.append(mail)
-#         emailList = email_list_filter(emailList)
-#         return emailList
+#         if len(emailList) == 0:
+#             try:
+#                 footer = soup.select('footer')
+#                 emailList = re.findall(r'([a-zA-Z0-9._-]+@[a-zA-Z._-]+\.[a-zA-Z_-]+)', str(footer))
+#                 emailList = email_list_filter(emailList)
+#                 contact_info = get_contact_number(footer)
+#                 return emailList , contact_info
+#             except:
+#                 pass
+#         else:
+#             emailList = email_list_filter(emailList)
+#             return emailList , contact_info
 #     except:
 #         pass
 
